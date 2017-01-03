@@ -31,8 +31,8 @@ Gradle dependency
 =======
 Since the library is promoted on maven central, just add a new gradle dependency :
 
-```java
-compile 'fr.tvbarthel.blurdialogfragment:lib:2.1.5'
+```groovy
+    compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
 ```
 
 Don't forget to check the [Use RenderScript in Your Project] (#use-renderscript-in-your-project) if you're planning to use it.
@@ -50,7 +50,7 @@ Use RenderScript in Your Project
 
 Simply add this line to your build.gradle
 
-```
+```groovy
 defaultConfig {
     ...
     renderscriptTargetApi 22
@@ -201,7 +201,6 @@ public class SampleDialogFragment extends MyCustomDialogFragment {
         super.onCreate(savedInstanceState);
         
         mBlurEngine = new BlurDialogEngine(getActivity());
-        mBlurEngine.debug(mDebugEnable);
         mBlurEngine.setBlurRadius(8);
         mBlurEngine.setDownScaleFactor(8f);
         mBlurEngine.debug(true);
@@ -224,7 +223,7 @@ public class SampleDialogFragment extends MyCustomDialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mBlurEngine.onDestroy();
+        mBlurEngine.onDetach();
     }
 
     @Override
@@ -241,6 +240,8 @@ public class SampleDialogFragment extends MyCustomDialogFragment {
 
 Benchmark
 =======
+
+# Benchmark outdated. Please refer to the debug option of the sample in order to compare FastBlur and RenderScript.
 
 We used a Nexus 5 running a 4.4.4 stock rom for this bench.
 
@@ -285,6 +286,8 @@ Find more information on the [memory trace](http://tvbarthel.github.io/blur-dial
 
 Change logs
 =======
+* 2.2.0 : Fix preDrawListener registration when there was no certitude that onPreDraw will be called thanks to [Serkan Modoğlu](https://github.com/sekomod) and [Mark Mooibroek](https://github.com/markmooibroek) reports.
+* 2.1.6 : Fix orientation change as well as retainInstance thanks to [IskuhiSargsyan](https://github.com/IskuhiSargsyan) report and tweak FastBlur implementation to avoid the allocation of 3 additional arrays for RGB channels thanks to [sh1](https://disqus.com/by/sh1sh1sh1/) feedback.
 * 2.1.5 : Minor fixes thanks to [Edward S](https://github.com/edward-s) and [Tommy Chan](https://github.com/tommytcchan).
 * 2.1.4 : Fix NPE during the blurring process thanks to [Anth06ny](https://github.com/Anth06ny), [jacobtabak](https://github.com/jacobtabak) and [serega2593](https://github.com/serega2593) reports.
 * 2.1.3 : Remove unused resources thanks to [ligol](https://github.com/ligol) report.
